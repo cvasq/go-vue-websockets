@@ -5,7 +5,7 @@ A simple Go web server hosting a Vue.JS web application
 The Vue.js app initiates a websocket connection the WebSocket Echo Server at echo.websocket.org
 
 
-**Running the app via Go**
+**Run with Go**
 
 1. Clone this repo:
 ```
@@ -24,7 +24,7 @@ $ go run main.go --port 8000
 2018/08/12 15:14:55 HTTP server started on port: 8000
 
 ```
-**Running the app via Docker**
+**Run with Docker**
 
 1. Clone and enter repo
 2. Build docker image
