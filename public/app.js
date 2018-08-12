@@ -10,7 +10,7 @@ new Vue({
       this.socket = new WebSocket("wss://echo.websocket.org");
       this.socket.onopen = () => {
         this.status = "connected";
-        this.logs.push({ event: "Connected to", data: 'wss://echo.websocket.org'})
+        this.logs.push({ event: "WebSocket Connect", data: this.socket.url})
         
 
         this.socket.onmessage = ({data}) => {

@@ -1,16 +1,29 @@
+/* Space out content a bit */
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  font-family: 'Roboto', sans-serif;
 }
 
-main {
-    flex: 1 0 auto;
+/* Custom page header */
+.header {
+  padding-bottom: 1rem;
+  border-bottom: .05rem solid #e5e5e5;
+  font-family: 'VT323', monospace;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 3rem;
 }
 
-#chat-messages {
-    min-height: 10vh;
-    height: 60vh;
-    width: 100%;
-    overflow-y: scroll;
+/* Customize container */
+@media (min-width: 48em) {
+  .container {
+    max-width: 46rem;
+  }
+}
+.container-narrow > hr {
+  margin: 2rem 0;
 }

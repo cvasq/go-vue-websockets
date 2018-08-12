@@ -2,38 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Simple Websocket Echo</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto|VT323" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
-
 </head>
 
 <body>
-    <header>
-        <nav>
-            <div class="nav-wrapper">
-                <a href="/" class="brand-logo right">Simple Chat</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <div id="app">
-          <button @click="disconnect" v-if="status === 'connected'">Disconnect</button>
-          <button @click="connect" v-if="status === 'disconnected'">Connect</button> {{ status }}
-          <br /><br />
-          <div v-if="status === 'connected'">
-            <form @submit.prevent="sendMessage" action="#">
-              <input v-model="message"><button type="submit">Send Message</button>
-            </form>
-            <ul id="logs">
-              <li v-for="log in logs" class="log">
-                {{ log.event }}: {{ log.data }}
-              </li>
-            </ul>
-          </div>
+    <div id="app" class="container">
+            <div class="float-right">Status : {{ status }}</div><br>
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pill float-right">
+                    <li class="nav-item">
+                        <button @click="disconnect" v-if="status === 'connected'" class="btn btn-secondary btn-lg">Disconnect</button>
+                        <button @click="connect" v-if="status === 'disconnected'" class="btn btn-primary btn-lg">Connect</button>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted"><a href="/"></a>Websocket Echo</a></h3>
         </div>
-    </main>
+
+    <div class="jumbotron">
+          1. Click connect to initiate a WebSocket connection to echo.websocket.org</br>
+          2. Type a message to send through the WebSocket</br>
+          3. The WebSocket connection will repeat back whatever message we send. Wow!!</br>
+          <div v-if="status === 'connected'">
+          </br>
+            <form @submit.prevent="sendMessage" action="#">
+              <input v-model="message" class="form-control" placeholder="Text..."><button type="submit">Send Message</button>
+            </form>
+                <table class="table table-striped">                                                                                                                                                                                       
+                <thead>                                                                                                                                                                                                               
+                    <tr>                                                                                                                                                                                                              
+                        <th>                                                                                                                                                                                                          
+                            Event
+                        </th>                                                                                                                                                                                                         
+                        <th>                                                                                                                                                                                                          
+                            Data
+                        </th>                                                                                                                                                                                                         
+                    </tr>                                                                                                                                                                                                             
+                </thead>                                                                                                                                                                                                              
+                <tbody>                                                                                                                                                                                                               
+                   <tr v-for="log in logs">                                                                                                                                                                                        
+                    <td >                                                                                                                                                                                                             
+                        <a v-text="log.event"></a>                                                                                                                                                                                
+                    </td>                                                                                                                                                                                                             
+                    <td >                                                                                                                                                                                                             
+                        <a v-text="log.data"></a>                                                                                                                                                                                
+                    </td>                                                                                                                                                                                                             
+                    </tr>                                                                                                                                                                                                             
+                                                                                                                                                                                                                                        
+                </tbody>                                                                                                                                                                                                              
+            </table>   
+          </div>
+    </div>
+
+    </div>
 
     <footer class="page-footer">
     </footer>
