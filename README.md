@@ -21,7 +21,7 @@ cd go-vue-websockets
 ```
 $ go run main.go --port 8000
 
-2018/08/12 15:14:55 http server started on port :8000
+2018/08/12 15:14:55 HTTP server started on port: 8000
 
 ```
 **Running the app via Docker**
