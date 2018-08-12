@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Websocket Echo</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo right">Simple Chat</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="app">
+          <button @click="disconnect" v-if="status === 'connected'">Disconnect</button>
+          <button @click="connect" v-if="status === 'disconnected'">Connect</button> {{ status }}
+          <br /><br />
+          <div v-if="status === 'connected'">
+            <form @submit.prevent="sendMessage" action="#">
+              <input v-model="message"><button type="submit">Send Message</button>
+            </form>
+            <ul id="logs">
+              <li v-for="log in logs" class="log">
+                {{ log.event }}: {{ log.data }}
+              </li>
+            </ul>
+          </div>
+        </div>
+    </main>
+
+    <footer class="page-footer">
+    </footer>
+
+    <script src="https://unpkg.com/vue@2.1.3/dist/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>
