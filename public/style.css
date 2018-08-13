@@ -6,6 +6,10 @@ body {
   background-color: #151515
 }
 
+a {
+    color: #6c757d;
+}
+
 .status {
     color:  white;
 }
@@ -31,4 +35,15 @@ body {
 }
 .container-narrow > hr {
   margin: 2rem 0;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: left;
 }
