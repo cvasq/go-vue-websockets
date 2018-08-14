@@ -9,7 +9,7 @@ The Vue.js app initiates a websocket connection the WebSocket Echo Server at ech
 
 1. Clone this repo:
 ```
-git clone git@github.com:carlos-py/go-vue-websockets.git
+git clone git@github.com:cvasq/go-vue-websockets.git
 ```
 
 2. Enter directory
