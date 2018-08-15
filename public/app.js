@@ -28,7 +28,7 @@ new Vue({
     sendMessage(e) {
       this.socket.send(this.message);
       this.logs.push({ event: "Sent message", data: this.message });
-        console.log("Sent:", data);
+        console.log("Sent:", this.message);
       this.message = "";
     }
   }
