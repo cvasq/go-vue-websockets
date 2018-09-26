@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 	"regexp"
@@ -20,6 +21,7 @@ func main() {
 	r := mux.NewRouter()
 	r.PathPrefix("/").HandlerFunc(FileServer)
 	http.Handle("/", r)
+	http.Handle("/metrics", promhttp.Handler())
 
 	log.Println("Listening on port: ", *httpPort)
 	err := http.ListenAndServe(":"+*httpPort, nil)
