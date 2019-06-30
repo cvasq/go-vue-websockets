@@ -12,7 +12,8 @@
 
 <body>
     <div id="app" class="container">
-            <div class="status float-right" id="status">Status : {{ status }}</div><br>
+        <div class="status float-right" id="status">Status : {{ status }}</div><br>
+
         <div class="header clearfix">
             <nav>
                 <ul class="nav nav-pill float-right">
@@ -25,41 +26,39 @@
             <h2 class="text-muted"><a href="/"></a>Websocket Echo</a></h2>
         </div>
 
-    <div class="jumbotron">
-          1. Click connect to initiate a WebSocket connection to echo.websocket.org<br>
-          2. Type a message to send through the WebSocket<br>
-          3. The WebSocket connection will repeat back whatever message we send. Wow!!<br>
-          <div v-if="status === 'connected'">
-          <br>
-            <form @submit.prevent="sendMessage" action="#">
-              <input v-model="message" class="form-control" placeholder="Text..."><button type="submit">Send Message</button>
-            </form>
-                <table class="table table-striped">                                                                                                                                                                                       
-                <thead>                                                                                                                                                                                                               
-                    <tr>                                                                                                                                                                                                              
-                        <th>                                                                                                                                                                                                          
-                            Event
-                        </th>                                                                                                                                                                                                         
-                        <th>                                                                                                                                                                                                          
-                            Data
-                        </th>                                                                                                                                                                                                         
-                    </tr>                                                                                                                                                                                                             
-                </thead>                                                                                                                                                                                                              
-                <tbody>                                                                                                                                                                                                               
-                   <tr v-for="log in logs">                                                                                                                                                                                        
-                    <td >                                                                                                                                                                                                             
-                        <a v-text="log.event"></a>                                                                                                                                                                                
-                    </td>                                                                                                                                                                                                             
-                    <td >                                                                                                                                                                                                             
-                        <a v-text="log.data"></a>                                                                                                                                                                                
-                    </td>                                                                                                                                                                                                             
-                    </tr>                                                                                                                                                                                                             
-                                                                                                                                                                                                                                        
-                </tbody>                                                                                                                                                                                                              
-            </table>   
-          </div>
-    </div>
-
+        <div class="jumbotron">
+              1. Click connect to initiate a WebSocket connection to echo.websocket.org<br>
+              2. Type a message to send through the WebSocket<br>
+              3. The WebSocket connection will repeat back whatever message we send. Wow!!<br>
+              <div v-if="status === 'connected'">
+              <br>
+                <form @submit.prevent="sendMessage" action="#">
+                  <input v-model="message" class="form-control" placeholder="Text..."><button type="submit">Send Message</button>
+                </form>
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Event
+                            </th>
+                            <th>
+                                Data
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr v-for="log in logs">
+                        <td >
+                            <a v-text="log.event"></a>
+                        </td>
+                        <td >
+                            <a v-text="log.data"></a>
+                        </td>
+                        </tr> 
+                    </tbody>
+                </table>   
+            </div>
+        </div>
     </div>
 
     <div class="footer">
@@ -70,6 +69,4 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="app.js"></script>
 </body>
-
-
 </html>
