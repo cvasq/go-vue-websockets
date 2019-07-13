@@ -2,7 +2,7 @@
 
 A simple Go web server hosting a Vue.JS web application
 
-The Vue.js app initiates a websocket connection the WebSocket Echo Server at echo.websocket.org
+The Vue.js app initiates a websocket connection to the WebSocket Echo Server at echo.websocket.org
 
 
 **Run with Go**
