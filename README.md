@@ -9,7 +9,7 @@ Example project for building other Vue + Go apps
 **Build info and requirements:**
 
 A Makefile is included for basic build tasks.  
-Built using Go 1.12
+Built using Go 1.12 and Vue CLI 3
 
 Build tools:
 - NPM 
