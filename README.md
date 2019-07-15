@@ -6,6 +6,7 @@ The frontend utilizes Vue.js Components and the application can be easily shippe
 
 Example project for starting other Vue + Go apps
 
+
 **Build info and requirements:**
 
 A Makefile is included for basic build tasks.  
@@ -15,6 +16,7 @@ Build tools:
 - NPM + Vue CLI
 - Golang 1.2+
 - Docker (optional)
+
 
 **Building with Docker**
 
