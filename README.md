@@ -43,8 +43,6 @@ Output:
 1. Clone and enter this repo:
 ```
 $ git clone git@github.com:cvasq/go-vue-websockets.git
-
-$ cd go-vue-websockets
 ```
 2. Build the Vue.JS frontend and Go Binary
 ```
