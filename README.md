@@ -54,6 +54,8 @@ $ make local-go
 
 ```
 $ ./go-vue-websockets 
+
+Output:
 2019/07/15 18:23:00 Server listening on port 8080
 2019/07/15 18:23:00 Access the web UI at http://localhost:8080/  
 
