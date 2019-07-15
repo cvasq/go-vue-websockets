@@ -3,7 +3,7 @@ FRONTEND_DIR=websocket-echo-client
 
 all: build-vue-app build-go docker
 frontend: build-vue-app
-local-go: build-go
+local-go: frontend build-go
 container: frontend docker
 
 .PHONY: build-vue-app
