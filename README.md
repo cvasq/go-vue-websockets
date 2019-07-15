@@ -8,6 +8,12 @@ Example project for building other Vue + Go apps
 A Makefile is included for basic build tasks.  
 Built using Go 1.12
 
+**Build Requirements:**
+
+- NPM 
+- Golang 1.2+
+- Docker (optional)
+
 **Building with Docker**
 
 1. Clone and enter this repo:
