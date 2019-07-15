@@ -12,7 +12,7 @@ A Makefile is included for basic build tasks.
 Built using Go 1.12 and Vue CLI 3
 
 Build tools:
-- NPM 
+- NPM + Vue CLI 3
 - Golang 1.2+
 - Docker (optional)
 
