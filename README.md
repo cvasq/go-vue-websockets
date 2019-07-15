@@ -1,43 +1,59 @@
 # go-vue-websockets
 
-A simple Go web server hosting a Vue.JS web application
+A basic Vue.JS web application which inititates a Websocket connection to echo.websocket.org  
+It uses Vue components on the frontend and the application can be easily shipped with Go and Docker
 
-The Vue.js app initiates a websocket connection to the WebSocket Echo Server at echo.websocket.org
+Example for building other Vue + Go apps
 
+A Makefile is included for basic build tasks.  
+Built using Go 1.12
 
-**Run with Go**
+**Running with Go**
 
-1. Clone this repo:
+1. Clone and enter this repo:
 ```
-git clone git@github.com:cvasq/go-vue-websockets.git
+$ git clone git@github.com:cvasq/go-vue-websockets.git
 ```
-
 2. Enter directory
 ```
-cd go-vue-websockets
+$ cd go-vue-websockets
+```
+3. Build the Vue.JS frontend
+```
+$ make frontend
+```
+4. Build the Go binary
+```
+$ make go-app
+```
+5. Run the application with Go
+
+```
+$ ./go-vue-websockets 
+2019/07/15 18:23:00 Server listening on port 8080
+2019/07/15 18:23:00 Access the web UI at http://localhost:8080/  
+
 ```
 
-3. Run the Go app with an optional port
-```
-$ go run main.go --port 8000
 
-2018/08/12 15:14:55 HTTP server started on port: 8000
+**Running with Docker**
 
+1. Clone and enter this repo:
 ```
-**Run with Docker**
+$ git clone git@github.com:cvasq/go-vue-websockets.git
+```
 
-1. Clone and enter repo
-2. Build docker image
-Replace your username
+2. Build the docker image
 ```
-docker build -t <username>/go-websockets-vue .
+$ make container
 ```
-3. Run container and map listening port to localhost.
-Listening port set in Dockerfile
+3. Run the built container and map the application listening port to your localhost.  
+_Default port 8080_
 ```
-docker run -it --rm -p 8000:8000 toor/go-websockets-vue:latest
+$ docker run -p 8080:8080 cvasquez/vue-websocket-echo:latest  
 
 Output:
-2018/08/12 23:12:38 HTTP server started on port: 8000
+2019/07/15 22:16:58 Server listening on port 8080
+2019/07/15 22:16:58 Access the web UI at http://localhost:8080/
 
 ```

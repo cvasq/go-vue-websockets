@@ -1,43 +1,45 @@
 package main
 
 import (
-	"flag"
-	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
-	"net/http"
-	"regexp"
+	"os"
+	"time"
+
+	"github.com/urfave/cli"
 )
 
-func main() {
+var flags []cli.Flag
 
-	// Set custom port by running with --port PORT_NUM
-	// Default port is 8080
-	httpPort := flag.String("port", "8080", "HTTP Listening Address")
-	flag.Parse()
+func init() {
 
-	log.Println("Starting Server")
-
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(FileServer)
-	http.Handle("/", r)
-	http.Handle("/metrics", promhttp.Handler())
-
-	log.Println("Listening on port: ", *httpPort)
-	err := http.ListenAndServe(":"+*httpPort, nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
+	flags = []cli.Flag{
+		cli.StringFlag{
+			Name:   "listening-port",
+			Value:  "8080",
+			Usage:  "Listening Port",
+			EnvVar: "LISTENING_PORT",
+		},
 	}
 }
 
-// Serve web files in public directory
-func FileServer(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL)
-	extension, _ := regexp.MatchString("\\.+[a-zA-Z]+", r.URL.EscapedPath())
-	// If the url contains an extension, use file server
-	if extension {
-		http.FileServer(http.Dir("./public/")).ServeHTTP(w, r)
-	} else {
-		http.ServeFile(w, r, "./public/index.html")
+func main() {
+
+	app := cli.NewApp()
+	app.Usage = "Vue.js Websocket Example"
+	app.Version = "1.0.0"
+	app.Compiled = time.Now()
+	app.Authors = []cli.Author{
+		cli.Author{
+			Name:  "Carlos Vasquez",
+			Email: "carlos@cobranix.com",
+		},
+	}
+	app.Flags = flags
+
+	app.Action = StartListener
+
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
