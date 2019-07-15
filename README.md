@@ -1,7 +1,7 @@
 # go-vue-websockets
 
 A basic Vue.JS web application which inititates a Websocket connection to echo.websocket.org  
-The Vue frontend utilizes components and the app can be easily shipped as a binary or container thanks to Go + Docker :whale2:
+The Vue frontend utilizes Vue Components and the app can be easily shipped as a binary or container thanks to Go + Docker :whale2:
 
 Example project for building other Vue + Go apps
 
