@@ -3,8 +3,8 @@ FRONTEND_DIR=websocket-echo-client
 
 all: build-vue-app build-go docker
 frontend: build-vue-app
-local-go: frontend build-go
-container: frontend docker
+go-build: build-vue-app go
+container: build-vue-app docker
 
 .PHONY: build-vue-app
 build-vue-app: 
@@ -12,7 +12,7 @@ build-vue-app:
 	npm run --prefix $(FRONTEND_DIR) build
 
 .PHONY: build-go
-build-go:
+go:
 	go build .
 
 .PHONY: docker

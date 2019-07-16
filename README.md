@@ -30,7 +30,7 @@ $ git clone git@github.com:cvasq/go-vue-websockets.git
 $ make container
 ```
 3. Run the built container image and map the application listening port to your localhost.  
-_Default port 8080_
+_Default port: 8080_
 ```
 $ docker run -p 8080:8080 cvasquez/vue-websocket-echo:latest  
 
@@ -47,11 +47,11 @@ Output:
 ```
 $ git clone git@github.com:cvasq/go-vue-websockets.git
 ```
-2. Build the Vue.JS frontend and Go Binary
+2. Build the Vue.JS frontend along with Go Binary
 ```
-$ make local-go
+$ make go-build
 ```
-3. Run the compiled binary
+3. Run the new executable binary file
 
 ```
 $ ./go-vue-websockets 
