@@ -35,8 +35,9 @@ _Default port 8080_
 $ docker run -p 8080:8080 cvasquez/vue-websocket-echo:latest  
 
 Output:
-2019/07/15 22:16:58 Server listening on port 8080
-2019/07/15 22:16:58 Access the web UI at http://localhost:8080/
+2019/07/15 21:54:05 Server starting on port 8080... 
+2019/07/15 21:54:05 Web Interface: http://localhost:8080/
+2019/07/15 21:54:05 Prometheus Metrics: http://localhost:8080/metrics
 
 ```
 
@@ -56,8 +57,9 @@ $ make local-go
 $ ./go-vue-websockets 
 
 Output:
-2019/07/15 18:23:00 Server listening on port 8080
-2019/07/15 18:23:00 Access the web UI at http://localhost:8080/  
+2019/07/15 21:52:05 Server starting on port 8080... 
+2019/07/15 21:52:05 Web Interface: http://localhost:8080/
+2019/07/15 21:52:05 Prometheus Metrics: http://localhost:8080/metrics
 
 ```
 

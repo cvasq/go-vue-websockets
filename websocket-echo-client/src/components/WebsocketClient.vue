@@ -23,7 +23,7 @@
          <input @click="sendMessage" type="submit" value="Send Message" style="float: right" />
          <div style="overflow: hidden; padding-right: .5em;">
             <form @submit.prevent="sendMessage" action="#">
-               <input v-model="message" type="text" style="width: 100%;" />
+               <input v-model="message" type="text" style="width: 100%;" v-on:keydown.enter="$event.stopPropagation()" />
             </form>
          </div>
          <br>
