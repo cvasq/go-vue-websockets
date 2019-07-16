@@ -61,3 +61,27 @@ Output:
 
 ```
 
+**Help Message**
+```
+$ ./go-vue-websockets -h
+
+NAME:
+   go-vue-websockets - Vue.js Websocket Example
+
+USAGE:
+   go-vue-websockets [global options] command [command options] [arguments...]
+
+VERSION:
+   1.0.0
+
+AUTHOR:
+   Carlos Vasquez <carlos@cobranix.com>
+
+COMMANDS:
+     help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --listening-port value  Listening Port (default: "8080") [$LISTENING_PORT]
+   --help, -h              show help
+   --version, -v           print the version
+```
