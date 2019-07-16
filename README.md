@@ -75,7 +75,7 @@ VERSION:
    1.0.0
 
 AUTHOR:
-   Carlos Vasquez <carlos@cobranix.com>
+   Carlos Vasquez <carlos@email.com>
 
 COMMANDS:
      help, h  Shows a list of commands or help for one command
