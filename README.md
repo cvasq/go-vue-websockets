@@ -14,7 +14,7 @@ Built using Go 1.12 and Vue CLI 3
 
 Build tools:
 - NPM + Vue CLI
-- Golang 1.2+
+- Golang 1.1+
 - Docker (optional)
 
 
