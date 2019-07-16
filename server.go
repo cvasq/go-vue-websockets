@@ -7,6 +7,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
+	"github.com/slok/go-http-metrics/middleware"
 	"github.com/urfave/cli"
 )
 
@@ -14,10 +16,15 @@ func StartListener(c *cli.Context) error {
 
 	listeningPort := c.GlobalString("listening-port")
 
-	r := mux.NewRouter()
-	r.PathPrefix("/").HandlerFunc(FileServer)
+	// Create our middleware.
+	metricsCollector := middleware.New(middleware.Config{
+		Recorder: metrics.NewRecorder(metrics.Config{}),
+	})
 
-	http.Handle("/", r)
+	router := mux.NewRouter()
+	router.PathPrefix("/").HandlerFunc(FileServer)
+
+	http.Handle("/", metricsCollector.Handler("", router))
 	http.Handle("/metrics", promhttp.Handler())
 
 	log.Println("Server listening on port", listeningPort)

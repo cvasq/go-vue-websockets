@@ -8,6 +8,7 @@ container: frontend docker
 
 .PHONY: build-vue-app
 build-vue-app: 
+	npm --prefix $(FRONTEND_DIR) install
 	npm run --prefix $(FRONTEND_DIR) build
 
 .PHONY: build-go
