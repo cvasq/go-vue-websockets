@@ -25,7 +25,7 @@ func init() {
 func main() {
 
 	app := cli.NewApp()
-	app.Usage = "Vue.js Websocket Example"
+	app.Usage = "Vue.js Websocket Client Example"
 	app.Version = "1.0.0"
 	app.Compiled = time.Now()
 	app.Authors = []cli.Author{

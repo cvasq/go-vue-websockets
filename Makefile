@@ -1,7 +1,7 @@
 APP_NAME=vue-websocket-echo
 FRONTEND_DIR=websocket-echo-client
 
-all: build-vue-app build-go docker
+all: build-vue-app go docker
 frontend: build-vue-app
 go-build: build-vue-app go
 container: build-vue-app docker
@@ -11,7 +11,7 @@ build-vue-app:
 	npm --prefix $(FRONTEND_DIR) install
 	npm run --prefix $(FRONTEND_DIR) build
 
-.PHONY: build-go
+.PHONY: go
 go:
 	go build .
 
