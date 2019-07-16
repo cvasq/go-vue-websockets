@@ -87,6 +87,7 @@ export default {
       this.socket.close()
       this.status = 'disconnected'
       this.logs = []
+      console.log('WebSocket disconnected')
     },
     sendMessage (e) {
       this.socket.send(this.message)
