@@ -3,13 +3,17 @@ package main
 import (
 	"log"
 	"net/http"
-	"regexp"
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
 	"github.com/slok/go-http-metrics/middleware"
+
+	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
+
 	"github.com/urfave/cli"
+
+	_ "./statik"
+	"github.com/rakyll/statik/fs"
 )
 
 func StartListener(c *cli.Context) error {
@@ -20,32 +24,33 @@ func StartListener(c *cli.Context) error {
 	metricsCollector := middleware.New(middleware.Config{
 		Recorder: metrics.NewRecorder(metrics.Config{}),
 	})
+	statikFS, err := fs.New()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	router := mux.NewRouter()
-	router.PathPrefix("/").HandlerFunc(FileServer)
+	staticHandler := http.FileServer(statikFS)
 
-	http.Handle("/", metricsCollector.Handler("", router))
+	r := mux.NewRouter()
+
+	r.Handle("/", metricsCollector.Handler("", staticHandler))
+
+	// Serves up the index.html file regardless of the path.
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		r.URL.Path = "/"
+		staticHandler.ServeHTTP(w, r)
+	})
+
+	http.Handle("/static/", staticHandler)
 	http.Handle("/metrics", promhttp.Handler())
-
 	log.Printf("Server starting on port %v... \n", listeningPort)
 	log.Println("Web Interface: http://localhost:" + listeningPort + "/")
 	log.Println("Prometheus Metrics: http://localhost:" + listeningPort + "/metrics")
-	err := http.ListenAndServe(":"+listeningPort, nil)
+
+	err = http.ListenAndServe(":"+listeningPort, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 
 	return nil
-}
-
-// Serve web files in public directory
-func FileServer(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL)
-	extension, _ := regexp.MatchString("\\.+[a-zA-Z]+", r.URL.EscapedPath())
-	// If the url contains an extension, use file server
-	if extension {
-		http.FileServer(http.Dir("./websocket-echo-client/dist")).ServeHTTP(w, r)
-	} else {
-		http.ServeFile(w, r, "./websocket-echo-client/dist/index.html")
-	}
 }
