@@ -3,13 +3,15 @@ package main
 import (
 	"log"
 	"net/http"
-	"regexp"
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
 	"github.com/slok/go-http-metrics/middleware"
 	"github.com/urfave/cli"
+
+	_ "./statik"
+	"github.com/rakyll/statik/fs"
 )
 
 func StartListener(c *cli.Context) error {
@@ -21,16 +23,24 @@ func StartListener(c *cli.Context) error {
 		Recorder: metrics.NewRecorder(metrics.Config{}),
 	})
 
-	router := mux.NewRouter()
-	router.PathPrefix("/").HandlerFunc(FileServer)
+	statikFS, err := fs.New()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	http.Handle("/", metricsCollector.Handler("", router))
+	staticHandler := http.FileServer(statikFS)
+
+	router := mux.NewRouter()
+	router.PathPrefix("/").Handler(staticHandler)
+
+	http.Handle("/", logRequest(metricsCollector.Handler("", router)))
 	http.Handle("/metrics", promhttp.Handler())
 
 	log.Printf("Server starting on port %v... \n", listeningPort)
 	log.Println("Web Interface: http://localhost:" + listeningPort + "/")
 	log.Println("Prometheus Metrics: http://localhost:" + listeningPort + "/metrics")
-	err := http.ListenAndServe(":"+listeningPort, nil)
+
+	err = http.ListenAndServe(":"+listeningPort, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
@@ -38,14 +48,11 @@ func StartListener(c *cli.Context) error {
 	return nil
 }
 
-// Serve web files in public directory
-func FileServer(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL)
-	extension, _ := regexp.MatchString("\\.+[a-zA-Z]+", r.URL.EscapedPath())
-	// If the url contains an extension, use file server
-	if extension {
-		http.FileServer(http.Dir("./websocket-echo-client/dist")).ServeHTTP(w, r)
-	} else {
-		http.ServeFile(w, r, "./websocket-echo-client/dist/index.html")
-	}
+func logRequest(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Requested URL: %v\n", r.URL.RequestURI())
+
+		next.ServeHTTP(w, r)
+	})
+
 }
