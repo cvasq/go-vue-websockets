@@ -13,10 +13,12 @@ WORKDIR /websocket-echo-client
 COPY --from=frontend-builder /websocket-echo-client/ /websocket-echo-client/
 RUN apk update && apk add git && apk add ca-certificates
 RUN go get -d -v
+RUN go get github.com/rakyll/statik
+RUN statik -src=./websocket-echo-client/dist
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o vue-websocket-echo
 
 # Copy final build to minimal container
 FROM alpine
 WORKDIR /websocket-echo-client
-COPY --from=builder /websocket-echo-client/ /websocket-echo-client/
+COPY --from=builder /websocket-echo-client/vue-websocket-echo /websocket-echo-client/vue-websocket-echo
 ENTRYPOINT ./vue-websocket-echo
