@@ -4,8 +4,8 @@
 FROM node:lts-alpine AS frontend-builder
 WORKDIR /websocket-echo-client
 ADD . /websocket-echo-client
-RUN npm --prefix websocket-echo-client install
-RUN npm run --prefix websocket-echo-client build
+RUN npm --prefix ui install
+RUN npm run --prefix ui build
 
 # Build go binary
 FROM golang:alpine AS builder
@@ -14,7 +14,7 @@ COPY --from=frontend-builder /websocket-echo-client/ /websocket-echo-client/
 RUN apk update && apk add git && apk add ca-certificates
 RUN go get -d -v
 RUN go get github.com/rakyll/statik
-RUN statik -src=./websocket-echo-client/dist
+RUN statik -src=./ui/dist
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o vue-websocket-echo
 
 # Copy final build to minimal container

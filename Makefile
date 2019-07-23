@@ -1,12 +1,11 @@
 APP_NAME=vue-websocket-echo
-FRONTEND_DIR=websocket-echo-client
+FRONTEND_DIR=ui
 
 all: build-vue-app statik go docker 
 build: frontend go-build
 frontend: build-vue-app statik
-go-build: go
+go-build: statik go
 container: docker
-statik: statik
 
 .PHONY: build-vue-app
 build-vue-app: 
@@ -23,4 +22,4 @@ docker:
 
 .PHONY: statik
 statik:
-	statik -src=./websocket-echo-client/dist
+	statik -src=./$(FRONTEND_DIR)/dist

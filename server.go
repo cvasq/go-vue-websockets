@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -36,6 +37,8 @@ func StartListener(c *cli.Context) error {
 	http.Handle("/", logRequest(metricsCollector.Handler("", router)))
 	http.Handle("/metrics", promhttp.Handler())
 
+	http.HandleFunc("/log-collector", logUserInput)
+
 	log.Printf("Server starting on port %v... \n", listeningPort)
 	log.Println("Web Interface: http://localhost:" + listeningPort + "/")
 	log.Println("Prometheus Metrics: http://localhost:" + listeningPort + "/metrics")
@@ -55,4 +58,26 @@ func logRequest(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 
+}
+
+func logUserInput(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodPost {
+
+		fmt.Println(r.URL.Query())
+
+		keys, ok := r.URL.Query()["data"]
+
+		if !ok || len(keys[0]) < 1 {
+			log.Println("Url Param 'data' is missing")
+			return
+		}
+
+		// Query()["key"] will return an array of items,
+		// we only want the single item.
+		data := keys[0]
+
+		log.Println("Url Param 'data' is: " + string(data))
+
+	}
 }
