@@ -1,6 +1,6 @@
 module.exports = {
-  publicPath: process.env.PUBLIC_PATH == null 
+  publicPath: process.env.VUE_APP_BASE_PATH === undefined || process.env.VUE_APP_BASE_PATH === null
     ? '/'
-    : '/demo/vue-websocket-echo',
+    : process.env.VUE_APP_BASE_PATH,
   runtimeCompiler: true
 }

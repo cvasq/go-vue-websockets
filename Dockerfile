@@ -2,6 +2,8 @@
 
 # Build production vue.js app
 FROM node:lts-alpine AS frontend-builder
+ARG VUE_APP_BASE_PATH
+ENV VUE_APP_BASE_PATH $VUE_APP_BASE_PATH
 WORKDIR /websocket-echo-client
 ADD . /websocket-echo-client
 RUN npm --prefix ui install
