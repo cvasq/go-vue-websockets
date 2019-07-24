@@ -89,14 +89,18 @@ export default {
       this.logs = []
       console.log('WebSocket disconnected')
     },
-    sendMessage (e) {
+    sendMessage () {
+      // Send message to Websocket echo service
       this.socket.send(this.message)
       this.logs.push({ event: 'Sent message', data: this.message })
 
-      this.$http.post('http://localhost:8080/log-collector', {data: "string"})
-      .then ((res)=> console.log (res.body))
-      .catch ((error)=> console.log(error))
+      // POST message user enetered to our server
+      this.axios.post('http://localhost:8080/log-collector', {message: this.message})
+        .catch(function (error) {
+          console.log(error)
+      })
 
+      // Log to console and clear input field
       console.log('Sent:', this.message)
       this.message = ''
     }

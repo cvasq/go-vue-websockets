@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -63,21 +63,14 @@ func logRequest(next http.Handler) http.Handler {
 func logUserInput(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
-
-		fmt.Println(r.URL.Query())
-
-		keys, ok := r.URL.Query()["data"]
-
-		if !ok || len(keys[0]) < 1 {
-			log.Println("Url Param 'data' is missing")
-			return
+		decoder := json.NewDecoder(r.Body)
+		var input struct {
+			Message string `json:"message"`
 		}
-
-		// Query()["key"] will return an array of items,
-		// we only want the single item.
-		data := keys[0]
-
-		log.Println("Url Param 'data' is: " + string(data))
-
+		err := decoder.Decode(&input)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println("User sent message:", input.Message)
 	}
 }

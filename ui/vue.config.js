@@ -1,6 +1,6 @@
 module.exports = {
   publicPath: process.env.PUBLIC_PATH == null 
     ? '/'
-    : '/hello',
+    : '/demo/vue-websocket-echo',
   runtimeCompiler: true
 }
