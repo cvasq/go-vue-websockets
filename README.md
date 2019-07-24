@@ -13,6 +13,8 @@ Example project for starting other Vue + Go apps
 │   └── statik - Embedded static frontend files directory
 ├── main.go - Main server entrypoint
 ├── server.go - HTTP Server logic
+├── Makefile - Build helper
+├── Dockerfile - Container build spec
 ```
 
 **Build info and requirements:**
@@ -20,12 +22,13 @@ Example project for starting other Vue + Go apps
 A Makefile is included for common build tasks.  
 Built using Go 1.12 and Vue CLI 3
 
-Build tools:
+Build tools used:
+- Vue CLI 
 - NPM
 - Golang 1.1+
 - [Statik](https://github.com/rakyll/statik)
-- Docker (optional)
-
+- Make command
+- Docker
 
 **List of routes**
 
