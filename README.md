@@ -27,7 +27,7 @@ Build tools used:
 - NPM
 - Golang 1.1+
 - [Statik](https://github.com/rakyll/statik)
-- Make command
+- Make utility
 - Docker
 
 **List of routes**
@@ -37,6 +37,8 @@ URL Path | Request Type |Purpose
 `/`|GET|Main frontend
 `/log-collector`|POST|Collects user entered input from the frontend
 `/metrics`|GET|Prometheus style metrics endpoint
+`/health`|GET|Returns a 200 HTTP code while app is running
+`/ready`|GET|Returns a 200 HTTP code when app is ready to serve traffic
 
 **Building with Docker**
 
@@ -56,9 +58,11 @@ _Default port: 8080_
 $ docker run -p 8080:8080 cvasquez/vue-websocket-echo:latest  
 
 Output:
-2019/07/15 21:54:05 Server starting on port 8080... 
-2019/07/15 21:54:05 Web Interface: http://localhost:8080/
-2019/07/15 21:54:05 Prometheus Metrics: http://localhost:8080/metrics
+2019/07/24 18:02:40 Server starting on port 8080... 
+2019/07/24 18:02:40 Web Interface: http://localhost:8080/
+2019/07/24 18:02:40 Prometheus Metrics: http://localhost:8080/metrics
+2019/07/24 18:02:40 Liveness Endpoint: http://localhost:8080/health
+2019/07/24 18:02:40 Readiness Endpoint: http://localhost:8080/ready
 
 ```
 
@@ -78,13 +82,15 @@ $ make go-build
 $ ./go-vue-websockets 
 
 Output:
-2019/07/15 21:52:05 Server starting on port 8080... 
-2019/07/15 21:52:05 Web Interface: http://localhost:8080/
-2019/07/15 21:52:05 Prometheus Metrics: http://localhost:8080/metrics
 
+2019/07/24 18:02:06 Server starting on port 8080...
+2019/07/24 18:02:06 Web Interface: http://localhost:8080/
+2019/07/24 18:02:06 Prometheus Metrics: http://localhost:8080/metrics
+2019/07/24 18:02:06 Liveness Endpoint: http://localhost:8080/health
+2019/07/24 18:02:06 Readiness Endpoint: http://localhost:8080/ready
 ```
 
-**Help Message**
+**CLI Help Message**
 ```
 $ ./go-vue-websockets -h
 

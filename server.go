@@ -30,12 +30,15 @@ func StartListener(c *cli.Context) error {
 
 	http.Handle("/", logRequest(metricsCollector.Handler("", router)))
 	http.Handle("/metrics", promhttp.Handler())
-
+	http.HandleFunc("/health", healthCheck)
+	http.HandleFunc("/ready", readyCheck)
 	http.HandleFunc("/log-collector", logUserInput)
 
 	log.Printf("Server starting on port %v... \n", listeningPort)
 	log.Println("Web Interface: http://localhost:" + listeningPort + "/")
 	log.Println("Prometheus Metrics: http://localhost:" + listeningPort + "/metrics")
+	log.Println("Liveness Endpoint: http://localhost:" + listeningPort + "/health")
+	log.Println("Readiness Endpoint: http://localhost:" + listeningPort + "/ready")
 
 	err = http.ListenAndServe(":"+listeningPort, nil)
 	if err != nil {
@@ -43,6 +46,16 @@ func StartListener(c *cli.Context) error {
 	}
 
 	return nil
+}
+
+// Healthcheck endpoint
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("Up")
+}
+
+// Readiness endpoint
+func readyCheck(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("Ready")
 }
 
 // Metrics Middleware.
