@@ -95,7 +95,7 @@ export default {
       this.logs.push({ event: 'Sent message', data: this.message })
 
       // POST message user enetered to our server
-      this.axios.post('http://localhost:8080/log-collector', {message: this.message})
+      this.axios.post(process.env.BASE_URL + 'log-collector', {message: this.message})
         .catch(function (error) {
           console.log(error)
       })
