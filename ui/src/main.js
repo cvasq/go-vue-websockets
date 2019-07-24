@@ -4,8 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
+Vue.use(VueAxios, axios)
 
 /* eslint-disable no-new */
 new Vue({

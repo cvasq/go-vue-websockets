@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -36,6 +37,8 @@ func StartListener(c *cli.Context) error {
 	http.Handle("/", logRequest(metricsCollector.Handler("", router)))
 	http.Handle("/metrics", promhttp.Handler())
 
+	http.HandleFunc("/log-collector", logUserInput)
+
 	log.Printf("Server starting on port %v... \n", listeningPort)
 	log.Println("Web Interface: http://localhost:" + listeningPort + "/")
 	log.Println("Prometheus Metrics: http://localhost:" + listeningPort + "/metrics")
@@ -55,4 +58,19 @@ func logRequest(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 
+}
+
+func logUserInput(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodPost {
+		decoder := json.NewDecoder(r.Body)
+		var input struct {
+			Message string `json:"message"`
+		}
+		err := decoder.Decode(&input)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println("User sent message:", input.Message)
+	}
 }
