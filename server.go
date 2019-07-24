@@ -19,16 +19,10 @@ func StartListener(c *cli.Context) error {
 
 	listeningPort := c.GlobalString("listening-port")
 
-	// Create our middleware.
-	metricsCollector := middleware.New(middleware.Config{
-		Recorder: metrics.NewRecorder(metrics.Config{}),
-	})
-
 	statikFS, err := fs.New()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	staticHandler := http.FileServer(statikFS)
 
 	router := mux.NewRouter()
@@ -51,17 +45,21 @@ func StartListener(c *cli.Context) error {
 	return nil
 }
 
+// Metrics Middleware.
+var metricsCollector = middleware.New(middleware.Config{
+	Recorder: metrics.NewRecorder(metrics.Config{}),
+})
+
+// Logging Middleware
 func logRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Requested URL: %v\n", r.URL.RequestURI())
-
 		next.ServeHTTP(w, r)
 	})
-
 }
 
+// Log user input POST request
 func logUserInput(w http.ResponseWriter, r *http.Request) {
-
 	if r.Method == http.MethodPost {
 		decoder := json.NewDecoder(r.Body)
 		var input struct {

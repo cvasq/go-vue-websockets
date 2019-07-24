@@ -1,11 +1,19 @@
 # go-vue-websockets
 
-A basic Vue.js web application which inititates a Websocket connection to echo.websocket.org  
+A Golang HTTP server / Vue.js web application that establishes a Websocket connection to echo.websocket.org  
 
 The frontend utilizes Vue.js Components and the application can be easily shipped as a binary or container thanks to Go + Docker :whale2:
 
 Example project for starting other Vue + Go apps
 
+**Directory structure**
+```bash
+├── go-vue-websockets
+│   ├── ui - Vue.js frontend directory
+│   └── statik - Embedded static frontend files directory
+├── main.go - Main server entrypoint
+├── server.go - HTTP Server logic
+```
 
 **Build info and requirements:**
 
@@ -17,6 +25,13 @@ Build tools:
 - Golang 1.1+
 - Docker (optional)
 
+**List of routes**
+
+URL Path | Request Type |Purpose
+:-----:|:-----: |:-----:
+`/`|GET|Main frontend
+`/log-collector`|POST|Collects user entered input from the frontend
+`/metrics`|GET|Prometheus style metrics endpoint
 
 **Building with Docker**
 
