@@ -17,13 +17,15 @@ Example project for starting other Vue + Go apps
 
 **Build info and requirements:**
 
-A Makefile is included for basic build tasks.  
+A Makefile is included for common build tasks.  
 Built using Go 1.12 and Vue CLI 3
 
 Build tools:
-- NPM + Vue CLI
+- NPM
 - Golang 1.1+
+- [Statik](https://github.com/rakyll/statik)
 - Docker (optional)
+
 
 **List of routes**
 
@@ -40,7 +42,8 @@ URL Path | Request Type |Purpose
 $ git clone git@github.com:cvasq/go-vue-websockets.git
 ```
 
-2. Build the docker image
+2. Build the docker image (Container size: ~12MB)
+
 ```
 $ make container
 ```
