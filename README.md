@@ -2,7 +2,7 @@
 
 A Golang HTTP server / Vue.js web application that establishes a Websocket connection to echo.websocket.org  
 
-The frontend utilizes Vue.js Components and the application can be easily shipped as a binary or container thanks to Go + Docker :whale2:
+The frontend utilizes Vue.js Components and the entire application can be easily shipped as a binary or container thanks to Go + Docker :whale2:
 
 Example project for starting other Vue + Go apps
 
