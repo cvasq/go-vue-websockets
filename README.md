@@ -17,7 +17,7 @@ Can serve as an example project for starting other Vue + Go apps
 ├── Dockerfile - Container build spec
 ```
 
-**Build info and requirements:**
+**Build info and requirements**
 
 A Makefile is included for common build tasks.  
 Built using Go 1.12 and Vue CLI 3
@@ -30,7 +30,7 @@ Build tools used:
 - Make utility
 - Docker
 
-**List of routes**
+**List of URL routes**
 
 URL Path | Request Type |Purpose
 :-----:|:-----: |:-----:
