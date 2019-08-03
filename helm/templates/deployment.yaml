@@ -1,0 +1,67 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "go-vue-websockets.fullname" . }}
+  labels:
+    app: {{ template "go-vue-websockets.name" . }}
+    chart: {{ template "go-vue-websockets.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "go-vue-websockets.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "go-vue-websockets.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.internalPort }}
+              protocol: TCP
+
+          {{- if .Values.livenessProbe.enabled }}                                                                                                                                                                                                                                                                            
+          livenessProbe:                                                                                                                                                                                                                                                                                                     
+            httpGet:                                                                                                                                                                                                                                                                                                         
+              path: {{ .Values.livenessProbe.path }}                                                                                                                                                                                                                                                                         
+              port: {{ .Values.service.port }}                                                                                                                                                                                                                                                                               
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}                                                                                                                                                                                                                                             
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}                                                                                                                                                                                                                                                         
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}                                                                                                                                                                                                                                                       
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}                                                                                                                                                                                                                                                   
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}                                                                                                                                                                                                                                                   
+          {{- end }}                                                                                                                                                                                                                                                                                                         
+          {{- if .Values.readinessProbe.enabled }}                                                                                                                                                                                                                                                                           
+          readinessProbe:                                                                                                                                                                                                                                                                                                    
+            httpGet:                                                                                                                                                                                                                                                                                                         
+              path: {{ .Values.readinessProbe.path }}                                                                                                                                                                                                                                                                        
+              port: {{ .Values.service.port }}                                                                                                                                                                                                                                                                               
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}                                                                                                                                                                                                                                            
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}                                                                                                                                                                                                                                                        
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}                                                                                                                                                                                                                                                      
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}                                                                                                                                                                                                                                                  
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}                                                                                                                                                                                                                                                  
+          {{- end }}  
+
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
