@@ -10,8 +10,8 @@
 export default {
   data () {
     return { 
-      metrics_link: 'https://cvasquez.dev/demo/dns-lookup-tool/metrics',
-      source_link: 'https://github.com/cvasq/dns-lookup-tool',
+      metrics_link: 'https://cvasquez.dev/demo/vue-websocket-echo/metrics',
+      source_link: 'https://github.com/cvasq/go-vue-websockets',
     }
   }
 }
