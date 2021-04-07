@@ -17,10 +17,8 @@ func StartListener(c *cli.Context) error {
 	listeningPort := c.String("listening-port")
 
 	fs := http.FileServer(http.Dir("../html"))
-	//fs := http.FileServer(http.Dir("../ui/dist"))
 	router := mux.NewRouter()
 	router.PathPrefix("/").Handler(fs)
-	// http.Handle("/", logRequest(metricsCollector.Handler("", router)))
 	http.Handle("/", logRequest(fs))
 	http.Handle("/metrics", promhttp.Handler())
 	http.HandleFunc("/health", healthCheck)
