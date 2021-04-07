@@ -6,6 +6,10 @@ The frontend utilizes Vue.js Components and the entire application can be easily
 
 Can serve as an example project for starting other Vue + Go apps
 
+**Live Demo
+
+https://demos.cvasquez.dev/websocket-echo
+
 **Directory structure**
 ```bash
 ├── go-vue-websockets
