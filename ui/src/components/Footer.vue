@@ -2,7 +2,6 @@
   <div class="footer">
     <small><button class="btn btn-link"><a href="https://cvasquez.dev/">Return to cvasquez.dev</a></button></small>
     <small><button class="btn btn-link metrics-link"><a v-bind:href="metrics_link">Metrics</a></button></small>
-    <small><button class="btn btn-link metrics-link"><a v-bind:href="source_link">Source Code</a></button></small>
 </div>
 </template>
 
@@ -10,7 +9,7 @@
 export default {
   data () {
     return { 
-      metrics_link: 'https://cvasquez.dev/demo/vue-websocket-echo/metrics',
+      metrics_link: 'https://demos.cvasquez.dev/websocket-echo/metrics',
       source_link: 'https://github.com/cvasq/go-vue-websockets',
     }
   }

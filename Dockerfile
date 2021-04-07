@@ -1,26 +1,34 @@
-# Multi-stage build 
+# Stage 1 - build
+FROM node:8.15-alpine AS builder
+WORKDIR /app
+COPY ui/package*.json ./
+RUN  npm install
+COPY ui/. .
+RUN VUE_APP_BASE_PATH="/websocket-echo" npm run build
 
-# Build production vue.js app
-FROM node:lts-alpine AS frontend-builder
-ARG VUE_APP_BASE_PATH
-ENV VUE_APP_BASE_PATH $VUE_APP_BASE_PATH
-WORKDIR /websocket-echo-client
-ADD . /websocket-echo-client
-RUN npm --prefix ui install
-RUN npm run --prefix ui build
+# Stage 2 - build go binary
+FROM golang:1.16.2-alpine@sha256:12d5f94cd4d2840e538e82e26a5dfddf711b30cc98a9f6e01bcf65d7aaf7ccd8 AS webserver_build
+WORKDIR /server
+ADD ./server/ /server
+RUN CGO_ENABLED=0 go build -ldflags '-extldflags "-static"' -o webserver
 
-# Build go binary
-FROM golang:alpine AS builder
-WORKDIR /websocket-echo-client
-COPY --from=frontend-builder /websocket-echo-client/ /websocket-echo-client/
-RUN apk update && apk add git && apk add ca-certificates
-RUN go get -d -v
-RUN go get github.com/rakyll/statik
-RUN statik -src=./ui/dist
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o vue-websocket-echo
+ENV USER=appuser
+ENV UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
 
-# Copy final build to minimal container
-FROM alpine
-WORKDIR /websocket-echo-client
-COPY --from=builder /websocket-echo-client/vue-websocket-echo /websocket-echo-client/vue-websocket-echo
-ENTRYPOINT ./vue-websocket-echo
+# Stage 2 - final build
+FROM scratch as final
+WORKDIR /app/html
+COPY --from=builder /app/dist .
+COPY --from=webserver_build /server/webserver ..
+COPY --from=webserver_build /etc/passwd /etc/passwd
+COPY --from=webserver_build /etc/group /etc/group
+USER appuser:appuser
+ENTRYPOINT ["/app/webserver"]
